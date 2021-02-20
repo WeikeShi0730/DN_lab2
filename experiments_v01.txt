@@ -1,0 +1,87 @@
+
+Quickly review EchoClientServer Client code.
+
+1. Basic client-server operation
+
+- start EchoClientServer server
+- start client multiple times showing different ephemeral ports.
+
+2. Show effect of SO_REUSEADDR in setsockopt
+
+- set SO_REUSEADDR to be 0
+- start server in one window
+- start client in another window
+- do some tx and rx
+- Cntl-C twice on server window to kill the client socket on server side and the server listening socket
+-start server again
+
+- set SO_REUSEADDR to be 1
+- repeat the above process
+
+
+3. Show effect of SO_REUSEADDR in setsockopt
+
+- set SO_REUSEADDR to be 0
+- set server HOSTNAME as 0.0.0.0
+- start server in one window
+- change server HOSTNAME into en0 IP
+- start server in another window
+
+- set SO_REUSEADDR to be 1
+- set server HOSTNAME as 0.0.0.0
+- start server in one window
+- change server HOSTNAME into en0 IP
+- start server in another window
+
+
+4. show EchoClientServerClientBind.py client bind section.
+
+- start EchoClientServerClientBind.py -r client and show that we are
+  always connecting from port 40000.
+
+- comment in the server section:
+  self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+  or change the line to self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 0)
+- start the server
+- connect a client 
+- kill the server 
+- start the server again 
+
+- comment in the client section:
+  self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+  or change the line to self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 0)
+- start the server
+- connect a client 
+- kill the client 
+- reconnect the client 
+
+
+5. show EchoClientServerIPv6.py code changes to client and server.
+
+- HOSTNAME = "::" 
+- Start server, start client.
+
+- start server, HOSTNAME = "::"
+- connect to IPv6 server with IPv4 client. What happens?
+
+
+6. EchoClientServer -r server
+
+- What happens if I paste some greek characters?
+
+- Switch to EchoClientServerAscii.py and do the same thing.
+
+7. use EchoClientServerOneRecv.py
+   (default Rx buffer is 1024)
+
+- Interact with server
+
+- Make the buffer small and show what a mess it is.
+
+8. EchoClientServerMultiRecvB.py
+   (print for each recv)
+
+- show what happens as the recv buffer size is changed.
+
+- paste in some greek chars. why is this happening?
+
